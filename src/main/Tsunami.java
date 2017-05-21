@@ -69,13 +69,19 @@ public class Tsunami {
 			return bz;
 		});
 		
-		get("/delete/:file", (request, response) -> {
+//		get("/delete/:file", (request, response) -> {
+//			String fileName = request.params("file");
+//			File f = new File("src/uploads/" + fileName);
+//			f.delete();
+//			JtwigTemplate template = JtwigTemplate.classpathTemplate("/views/delete.html.twig");
+//			JtwigModel model = JtwigModel.newModel().with("name", fileName);
+//			return template.render(model);
+//		});
+		
+		post("/delete/:file", (request, response) -> {
 			String fileName = request.params("file");
 			File f = new File("src/uploads/" + fileName);
-			f.delete();
-			JtwigTemplate template = JtwigTemplate.classpathTemplate("/views/delete.html.twig");
-			JtwigModel model = JtwigModel.newModel().with("name", fileName);
-			return template.render(model);
+			return f.delete();
 		});
 		
 		get("/img/dn.png", (request, response) -> {
@@ -86,6 +92,11 @@ public class Tsunami {
 		get("/img/dl.png", (request, response) -> {
 			response.raw().setContentType("image/png");
 			byte[] bz = IOUtils.toByteArray(new FileInputStream("src/views/images/delete.png"));
+			return bz;
+		});
+		get("/img/logo.png", (request, response) -> {
+			response.raw().setContentType("image/png");
+			byte[] bz = IOUtils.toByteArray(new FileInputStream("src/views/images/logo.png"));
 			return bz;
 		});
 	}
