@@ -99,6 +99,14 @@ public class Tsunami {
 			byte[] bz = IOUtils.toByteArray(new FileInputStream("src/views/images/logo.png"));
 			return bz;
 		});
+		
+		
+		get("/about", (request, response) -> {
+		JtwigTemplate template = JtwigTemplate.classpathTemplate("/views/about.html.twig");
+		JtwigModel model = JtwigModel.newModel();
+		return template.render(model);
+	});
+		
 	}
 
 }
