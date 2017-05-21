@@ -18,23 +18,25 @@ public class Tsunami {
 		get("/", new HomeController());
 		
 		post("/", (request, response) -> {
-			String s = "";
+			String s = "(didn't upload anything)";
 			OutputStream outputstream;
 		    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
 		    try (InputStream is = request.raw().getPart("uploaded_file").getInputStream()) {
 		        // Use the input stream to create a file
-		    	File f = new File("src/uploads/" + request.raw().getPart("uploaded_file").getSubmittedFileName());
-		    	f.createNewFile();
-		    	s = request.raw().getPart("uploaded_file").getSubmittedFileName();
-		    	outputstream = new FileOutputStream(f);
-		    	int read = 0;
-		    	byte[] bytes = new byte[1024];
-		    	while ((read = is.read(bytes)) != -1){
-		    		outputstream.write(bytes, 0, read);
+		    	if(request.raw().getPart("uploaded_file").getSubmittedFileName().length() > 0){
+		    		File f = new File("src/uploads/" + request.raw().getPart("uploaded_file").getSubmittedFileName());
+		    		f.createNewFile();
+		    		s = request.raw().getPart("uploaded_file").getSubmittedFileName();
+		    		outputstream = new FileOutputStream(f);
+		    		int read = 0;
+		    		byte[] bytes = new byte[1024];
+		    		while ((read = is.read(bytes)) != -1){
+		    			outputstream.write(bytes, 0, read);
+		    		}
+		    		System.out.println("done!");
+		    		is.close();
+		    		outputstream.close();
 		    	}
-		    	System.out.println("done!");
-		    	is.close();
-		    	outputstream.close();
 		    	
 		    } catch (IOException e){
 		    	e.printStackTrace();
