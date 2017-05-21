@@ -2,19 +2,36 @@
 	<head>
 		<style type="text/css">
 			body {
-     			background-color: #999999;
+     			background-color: #444444;
  			}
  			p{
  				color: #DDDDDD;
  			}
+ 			.boot{
+ 				border: none;
+                border-radius: 5px;
+                padding: 9px;
+                background-color: #379F54;
+                color: white;
+                font-size: 17;
+ 			}
+ 			.color{
+ 				color:white;
+ 				font-family: sans-serif;
+ 			}
 		</style>
     </head>
 	<body>
-		<p>Hello! {{ var }}</p>
+		<h1 class="color">Shared Files:</h1>
 		<br/>
 		<form method='post' enctype='multipart/form-data'>
     		<input type='file' name='uploaded_file'>
-    		<button>Upload Thing</button>
+    		<button class="boot">Upload File</button>
 		</form>
+		<br/>
+		<br/>
+		{% for name in files %}
+		{{ name }} <a href="/downloads/{{ name }}" download>Download</a> <a href="/delete/{{ name }}">Delete</a><br/><br/>
+		{% endfor %}
 	</body>
 </html>

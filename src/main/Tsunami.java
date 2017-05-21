@@ -5,8 +5,12 @@ import java.io.*;
 
 import javax.servlet.MultipartConfigElement;
 
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
+
 import controllers.HomeController;
-import spark.*; 
+import spark.*;
+import spark.utils.IOUtils; 
 public class Tsunami {
 
 	public static void main(String[] args) throws IOException{
@@ -14,12 +18,14 @@ public class Tsunami {
 		get("/", new HomeController());
 		
 		post("/", (request, response) -> {
+			String s = "";
 			OutputStream outputstream;
 		    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
 		    try (InputStream is = request.raw().getPart("uploaded_file").getInputStream()) {
 		        // Use the input stream to create a file
-		    	File f = new File("src/uploads/idk.test");
+		    	File f = new File("src/uploads/" + request.raw().getPart("uploaded_file").getSubmittedFileName());
 		    	f.createNewFile();
+		    	s = request.raw().getPart("uploaded_file").getSubmittedFileName();
 		    	outputstream = new FileOutputStream(f);
 		    	int read = 0;
 		    	byte[] bytes = new byte[1024];
@@ -49,7 +55,27 @@ public class Tsunami {
 //		    		}
 //		    	}
 //		    }
-		    return "File uploaded";
+		    JtwigTemplate template = JtwigTemplate.classpathTemplate("/views/add.html.twig");
+			JtwigModel model = JtwigModel.newModel().with("name", s);
+			return template.render(model);
+		    
+		  
+		});
+		
+		get("/downloads/:file", (request, response) -> {
+			String fileName = request.params("file");
+			System.out.println(fileName);
+			byte[] bz = IOUtils.toByteArray(new FileInputStream("src/uploads/" + fileName));
+			return bz;
+		});
+		
+		get("/delete/:file", (request, response) -> {
+			String fileName = request.params("file");
+			File f = new File("src/uploads/" + fileName);
+			f.delete();
+			JtwigTemplate template = JtwigTemplate.classpathTemplate("/views/delete.html.twig");
+			JtwigModel model = JtwigModel.newModel().with("name", fileName);
+			return template.render(model);
 		});
 	}
 
