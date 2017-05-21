@@ -19,6 +19,15 @@
  				color:white;
  				font-family: sans-serif;
  			}
+ 			.rect-outer {
+                width: 300px;
+                height: auto;
+                border: 3px solid #379F54;
+                padding: 30px;
+                color: white;
+                background-color: #444444;
+                
+            }
 		</style>
     </head>
 	<body>
@@ -31,7 +40,7 @@
 		<br/>
 		<br/>
 		{% for name in files %}
-		{{ name }} <a href="/downloads/{{ name }}" download>Download</a> <a href="/delete/{{ name }}">Delete</a><br/><br/>
+		<div class="rect-outer">{{ name }} <a href="/downloads/{{ name }}" download>Download</a> <a href="/delete/{{ name }}">Delete</a></div>
 		{% endfor %}
 	</body>
 </html>
