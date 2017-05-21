@@ -41,7 +41,9 @@
 		function poost(name){
 			$.post("/delete/" + name,
 			    function(data,status){
-			        alert("Data: " + data + "\nStatus: " + status);
+			        if(data != "ERRNODEL"){
+			        	document.getElementById("DIVID-" + name).remove();
+				    }
 			    }
 			);
 		}
@@ -56,7 +58,7 @@
 		<br/>
 		<br/>
 		{% for name in files %}
-		<div class="rect-outer">{{ name }} <a class="imglnk" style="float: right" onclick="poost(\"{{ name }}\")"><img src="/img/dl.png" /></a><a class="imglnk" style="float: right" href="/downloads/{{ name }}" download><img src="/img/dn.png" /></a></div>
+		<div style="display: block" id="DIVID-{{ name }}" class="rect-outer">{{ name }} <a class="imglnk" href="#" style="float: right" onclick="poost('{{ name }}')"><img src="/img/dl.png" /></a><a class="imglnk" style="float: right" href="/downloads/{{ name }}" download><img src="/img/dn.png" /></a></div>
 		{% endfor %}
 	</body>
 </html>

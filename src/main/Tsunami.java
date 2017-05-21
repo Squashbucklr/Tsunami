@@ -81,7 +81,12 @@ public class Tsunami {
 		post("/delete/:file", (request, response) -> {
 			String fileName = request.params("file");
 			File f = new File("src/uploads/" + fileName);
-			return f.delete();
+			boolean b = f.delete();
+			if(b){
+				return fileName;
+			}else{
+				return "ERRNODEL";
+			}
 		});
 		
 		get("/img/dn.png", (request, response) -> {
