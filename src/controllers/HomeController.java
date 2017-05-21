@@ -7,8 +7,8 @@ import org.jtwig.*;
 import spark.*;
 
 public class HomeController implements Route{
-	String input;
 	public Object handle(Request arg0, Response arg1) throws Exception {
+		String input;
 		JtwigTemplate template = JtwigTemplate.classpathTemplate("/views/home.html.twig");
 		JtwigModel model = JtwigModel.newModel().with("var", "World");
 		File dir = new File("src/uploads");

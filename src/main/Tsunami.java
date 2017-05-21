@@ -77,6 +77,17 @@ public class Tsunami {
 			JtwigModel model = JtwigModel.newModel().with("name", fileName);
 			return template.render(model);
 		});
+		
+		get("/img/dn.png", (request, response) -> {
+			response.raw().setContentType("image/png");
+			byte[] bz = IOUtils.toByteArray(new FileInputStream("src/views/images/download.png"));
+			return bz;
+		});
+		get("/img/dl.png", (request, response) -> {
+			response.raw().setContentType("image/png");
+			byte[] bz = IOUtils.toByteArray(new FileInputStream("src/views/images/delete.png"));
+			return bz;
+		});
 	}
 
 }

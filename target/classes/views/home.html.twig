@@ -40,7 +40,7 @@
 		<br/>
 		<br/>
 		{% for name in files %}
-		<div class="rect-outer">{{ name }} <a href="/downloads/{{ name }}" download>Download</a> <a href="/delete/{{ name }}">Delete</a></div>
+		<div class="rect-outer">{{ name }} <a style="float: right" href="/delete/{{ name }}"><img src="/img/dl.png" /></a><a style="float: right" href="/downloads/{{ name }}" download><img src="/img/dn.png" /></a></div>
 		{% endfor %}
 	</body>
 </html>
