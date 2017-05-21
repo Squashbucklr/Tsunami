@@ -13,10 +13,16 @@ public class HomeController implements Route{
 		JtwigModel model = JtwigModel.newModel().with("var", "World");
 		File dir = new File("src/uploads");
 		File[] files = dir.listFiles();
-		String[] fnames = new String[files.length];
-		for (int i = 0; i < files.length; i++) {
-			fnames[i] = files[i].getName();
+		String[] fnames;
+		if (files == null){
+			fnames = new String[0];
+		}else{
+			fnames= new String[files.length];
+			for (int i = 0; i < files.length; i++) {
+				fnames[i] = files[i].getName();
+			}
 		}
+		
 		model.with("files", fnames);
         return template.render(model);
 	}
